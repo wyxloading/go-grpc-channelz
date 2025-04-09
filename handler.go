@@ -7,7 +7,6 @@ import (
 
 	"google.golang.org/grpc"
 	channelzgrpc "google.golang.org/grpc/channelz/grpc_channelz_v1"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 // CreateHandler creates an http handler with the routes of channelz mounted to the provided prefix.
@@ -26,7 +25,6 @@ func CreateHandler(pathPrefix, grpcBindAddress string) http.Handler {
 	return CreateHandlerWithDialOpts(
 		pathPrefix,
 		grpcBindAddress,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 }
 

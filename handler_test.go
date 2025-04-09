@@ -15,7 +15,6 @@ import (
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	channelzSrv "google.golang.org/grpc/channelz/service"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/test/bufconn"
 	"google.golang.org/protobuf/types/known/emptypb"
 
@@ -67,7 +66,6 @@ func TestCreateHandlerWithDialOpts(t *testing.T) {
 		// construct demo client
 		demoClient, err := client.NewWithDialOpts("",
 			[]grpc.DialOption{
-				grpc.WithTransportCredentials(insecure.NewCredentials()),
 				grpc.WithContextDialer(func(ctx context.Context, s string) (net.Conn, error) {
 					return listener.DialContext(ctx)
 				}),
@@ -94,7 +92,6 @@ func TestCreateHandlerWithDialOpts(t *testing.T) {
 	// create http.Handler which uses dialOpts to dial to in memory listener
 	handler := CreateHandlerWithDialOpts("/prefix", ":8080",
 		[]grpc.DialOption{
-			grpc.WithTransportCredentials(insecure.NewCredentials()),
 			grpc.WithContextDialer(func(ctx context.Context, s string) (net.Conn, error) {
 				return listener.DialContext(ctx)
 			}),
